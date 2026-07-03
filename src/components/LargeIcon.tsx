@@ -1,5 +1,5 @@
-import Icon from '@mdi/react';
-import classNames from 'classnames';
+import { Icon } from '@mdi/react';
+import classNames from 'clsx';
 import type { HTMLProps } from 'react';
 
 type LargeIconProps = HTMLProps<HTMLDivElement> & {
@@ -8,7 +8,7 @@ type LargeIconProps = HTMLProps<HTMLDivElement> & {
 
 const LargeIcon = ({ icon, ...props }: LargeIconProps) => {
     const className = classNames(
-        'w-20 h-20 rounded-full bg-white bg-opacity-40 inline-flex items-center justify-center',
+        'w-20 h-20 rounded-full bg-white/40 inline-flex items-center justify-center',
         props.className,
     );
 

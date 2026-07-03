@@ -26,7 +26,7 @@ const RatioSliderHint = ({
 
     return (
         <Portal isOpen={isOpen}>
-            <div className="app fixed inset-0 bg-black bg-opacity-75 z-10">
+            <div className="app fixed inset-0 bg-black/75 z-10">
                 <MainLayout>
                     <h1 className="text-5xl font-bold">How to use</h1>
                     <section

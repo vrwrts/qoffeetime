@@ -1,4 +1,3 @@
-import template from 'lodash.template';
 import { Fragment } from 'react';
 
 export const formatTime = (
@@ -42,8 +41,26 @@ export const toMilliseconds = (val: number) => val * 1000;
 
 export const toSeconds = (val: number) => round(val / 1000);
 
-export const applyTemplate = (string: string, data: Record<string, unknown>) =>
-    template(string, { interpolate: /{{([\s\S]+?)}}/g })(data);
+// Evaluates `{{ expr }}` placeholders — which may contain arbitrary JS
+// expressions like `{{ Math.ceil((coffee * 2) / 10) * 10 }}` — against `data`
+// by turning the string into a template literal. The templates come from the
+// app's own recipe JSON (never user input); global helpers like `Math` resolve
+// normally. Note: like the lodash.template it replaces, this relies on the
+// Function constructor, so it needs `unsafe-eval` if a CSP is ever added.
+export const applyTemplate = (
+    string: string,
+    data: Record<string, number>,
+): string => {
+    const literal = string.replace(
+        /{{([\s\S]+?)}}/g,
+        (_, expr: string) => `\${${expr}}`,
+    );
+    const render = new Function(
+        ...Object.keys(data),
+        `return \`${literal}\`;`,
+    ) as (...values: number[]) => string;
+    return render(...Object.values(data));
+};
 
 export const vibrate = (...pattern: number[]) => {
     if ('vibrate' in navigator) {

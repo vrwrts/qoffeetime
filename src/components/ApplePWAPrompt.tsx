@@ -50,7 +50,7 @@ const ApplePWAPrompt = () => {
     return (
         <Portal isOpen={!seenPrompt && !isInStandaloneMode && isIOS}>
             <aside className="fixed bottom-0 left-0 right-0 z-20 p-2">
-                <div className=" rounded-lg dark:bg-black dark:bg-opacity-60 dark:text-white bg-white bg-opacity-75 text-black bg-clip-padding backdrop-filter backdrop-blur-3xl">
+                <div className=" rounded-lg dark:bg-black/60 dark:text-white bg-white/75 text-black bg-clip-padding backdrop-filter backdrop-blur-3xl">
                     <header className="flex justify-between px-4 py-2">
                         <h4 className="text-lg font-semibold">
                             Add to Home Screen
@@ -63,11 +63,11 @@ const ApplePWAPrompt = () => {
                             Close
                         </button>
                     </header>
-                    <p className="p-4 border-t text-gray-500 text-sm">
+                    <p className="p-4 border-t border-gray-200 text-gray-500 text-sm">
                         This website has app functionality. Add it to your
                         homescreen to get the best experience.
                     </p>
-                    <ol className="p-4 border-t text-gray-500">
+                    <ol className="p-4 border-t border-gray-200 text-gray-500">
                         <li className="flex items-center mb-4">
                             <AppleShareIcon className="text-blue-600 w-6 h-6 grow-0 shrink-0 mr-3" />
                             <span className="leading-5 text-sm">
@@ -83,7 +83,7 @@ const ApplePWAPrompt = () => {
                     </ol>
                 </div>
             </aside>
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-10" />
+            <div className="fixed inset-0 bg-black/50 z-10" />
         </Portal>
     );
 };

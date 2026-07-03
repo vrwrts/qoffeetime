@@ -1,7 +1,7 @@
 import { mdiCheck } from '@mdi/js';
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
-import Confetti from 'react-canvas-confetti';
+import confetti from 'canvas-confetti';
+import { useEffect } from 'react';
 
 import Button from '../../components/Button';
 import BuyMeACoffee from '../../components/BuyMeACoffee';
@@ -30,12 +30,19 @@ const SuccessPage = () => {
     const output = outputParam || previousSettings?.output || minOutput;
     const ratio = ratioParam || previousSettings?.ratio || defaultRatio;
 
-    const [shouldFire, setShouldFire] = useState(false);
+    const fire = () =>
+        confetti({
+            particleCount: 75,
+            spread: 60,
+            ticks: 600,
+            origin: { x: 0.5, y: 0.3 },
+            disableForReducedMotion: true,
+        });
 
     // On mount: fire the confetti, persist this brew's settings, and mark it
     // as the most recently used recipe.
     useEffect(() => {
-        setShouldFire(true);
+        fire();
         setLatestSettings({ output, ratio });
         setLatest(slug);
     }, [output, ratio, slug, setLatest, setLatestSettings]);
@@ -44,22 +51,12 @@ const SuccessPage = () => {
         <>
             <NavLayout />
             <MainLayout>
-                <Confetti
-                    className="fixed inset-0 z-0 w-full h-full"
-                    disableForReducedMotion
-                    fire={shouldFire}
-                    onFire={() => setShouldFire(false)}
-                    origin={{ x: 0.5, y: 0.3 }}
-                    particleCount={75}
-                    spread={60}
-                    ticks={600}
-                />
                 <section className="flex-1 flex flex-col items-center justify-center z-10">
                     <LargeIcon
                         icon={mdiCheck}
                         onClick={() => {
                             vibrate(50);
-                            setShouldFire(true);
+                            fire();
                         }}
                     />
                 </section>

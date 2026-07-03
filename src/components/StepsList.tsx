@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import classNames from 'clsx';
 import { useEffect, useRef } from 'react';
 
 import { formatTime } from '../lib/helpers';
@@ -19,9 +19,9 @@ const StepsListItem = ({
     duration,
     isCurrent,
 }: StepsListItemProps) => {
-    const className = classNames('text-lg leading-5 text-white text-base', {
-        'text-opacity-60': !isCurrent,
-        'text-opacity-100': isCurrent,
+    const className = classNames('text-lg leading-5 text-base', {
+        'text-white/60': !isCurrent,
+        'text-white': isCurrent,
         'font-semibold': isCurrent,
     });
     const ref = useRef<HTMLLIElement>(null);
@@ -38,7 +38,7 @@ const StepsListItem = ({
 
     return (
         <li className="flex flex-row items-center mb-3" ref={ref}>
-            <span className="text-black text-opacity-30 font-bold flex-none mr-4">
+            <span className="text-black/30 font-bold flex-none mr-4">
                 {number}
             </span>
             <StopWatch className="mr-4">

@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import classNames from 'classnames';
+import classNames from 'clsx';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect } from 'react';
 
@@ -16,6 +16,13 @@ type SliderRecipe = {
     tagline: Recipe['tagline'];
 };
 
+// Width of each slide as a percentage of the viewport. The inter-slide gap
+// lives on each slide (px-1.5 → 0.375rem per side = 0.75rem between slides), not
+// as a CSS `gap` on the track: embla's loop mode repositions slide boxes, and a
+// container `gap` isn't part of any box so it wouldn't carry across the
+// last→first seam.
+const SLIDE_WIDTH = 90;
+
 const RecipeSlide = ({ latest, slug, tagline, ...recipe }: SliderRecipe) => {
     // Insert `<wbr />` tags within words containing multiple capitals:
     const name = insertBreakAtCapital(recipe.name);
@@ -27,6 +34,8 @@ const RecipeSlide = ({ latest, slug, tagline, ...recipe }: SliderRecipe) => {
             search={
                 latest ? { output: latest.output, ratio: latest.ratio } : {}
             }
+            className="px-1.5"
+            style={{ flex: `0 0 ${SLIDE_WIDTH}%` }}
         >
             <div className="h-full bg-brand relative">
                 <img
@@ -36,7 +45,7 @@ const RecipeSlide = ({ latest, slug, tagline, ...recipe }: SliderRecipe) => {
                 />
                 <header className="absolute h-full flex flex-col justify-end p-4">
                     <h2 className="text-7xl font-bold w-5/6">{name}</h2>
-                    <h3 className="text-lg mt-10 break-words h-full max-h-32">
+                    <h3 className="text-lg mt-10 wrap-break-word h-full max-h-32">
                         {tagline}
                     </h3>
                 </header>
@@ -51,14 +60,20 @@ type RecipeSliderProps = {
     recipies: SliderRecipe[];
 };
 
-const SLIDE_WIDTH = 90;
-
 const RecipeSlider = ({
     onChange,
     pagination = true,
     recipies,
 }: RecipeSliderProps) => {
-    const [emblaRef, embla] = useEmblaCarousel({ skipSnaps: true });
+    // `align: 'center'` centres each slide in the viewport; `containScroll:
+    // false` lets the first and last slides reach that centred position too
+    // (instead of being trimmed flush to the edges).
+    const [emblaRef, embla] = useEmblaCarousel({
+        align: 'center',
+        containScroll: false,
+        skipSnaps: true,
+        loop: true,
+    });
 
     // Helper function to safely get the currently selected index:
     const getSelectedIndex = useCallback(
@@ -88,15 +103,7 @@ const RecipeSlider = ({
     return (
         <>
             <div className="overflow-hidden flex-1" ref={emblaRef}>
-                <div
-                    className="h-full grid grid-flow-col gap-3"
-                    style={{
-                        gridAutoColumns: `${SLIDE_WIDTH}%`,
-                        transform: `translate3d(${
-                            (100 - SLIDE_WIDTH) / 2
-                        }vw, 0px, 0px)`,
-                    }}
-                >
+                <div className="flex h-full">
                     {recipies.map((recipe) => (
                         <RecipeSlide key={recipe.slug} {...recipe} />
                     ))}

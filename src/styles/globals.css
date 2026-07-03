@@ -1,10 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+    --color-brand: #ff1744;
+    --color-coffee: #8a0020;
+}
+
+/* Neutralise the typography plugin's colours so `prose` inherits the app's
+   theme (white on brand red), matching the old tailwind.config overrides. */
+.prose {
+    --tw-prose-body: currentColor;
+    --tw-prose-headings: currentColor;
+    --tw-prose-lead: currentColor;
+    --tw-prose-links: currentColor;
+    --tw-prose-bold: currentColor;
+    --tw-prose-counters: currentColor;
+    --tw-prose-bullets: currentColor;
+    --tw-prose-quotes: currentColor;
+    line-height: 1.5;
+}
+.prose a {
+    text-decoration: none;
+}
 
 #root,
 .app {
-    @apply grid grid-cols-1 h-full;
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 100dvh;
     grid-template-rows: 64px 1fr minmax(64px, max-content);
-    grid-template-areas: "nav" "main" "footer";
+    grid-template-areas: 'nav' 'main' 'footer';
 }

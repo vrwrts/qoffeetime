@@ -1,6 +1,5 @@
 import { mdiCoffeeOffOutline } from '@mdi/js';
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
-import { useEffect } from 'react';
 
 import ApplePWAPrompt from '../components/ApplePWAPrompt';
 import Button from '../components/Button';
@@ -8,25 +7,14 @@ import LargeIcon from '../components/LargeIcon';
 import FooterLayout from '../layouts/FooterLayout';
 import FullHeightLayout from '../layouts/FullHeightLayout';
 
-// Keep the app sized to the visible viewport (handles mobile browser chrome).
-const updateHeight = () => {
-    document.body.style.height = `${window.innerHeight}px`;
-};
-
-const RootComponent = () => {
-    useEffect(() => {
-        updateHeight();
-        window.addEventListener('resize', updateHeight);
-        return () => window.removeEventListener('resize', updateHeight);
-    }, []);
-
-    return (
-        <>
-            <ApplePWAPrompt />
-            <Outlet />
-        </>
-    );
-};
+// App height is handled purely in CSS via `#root { height: 100dvh }`
+// (see src/styles/globals.css), which tracks mobile browser chrome.
+const RootComponent = () => (
+    <>
+        <ApplePWAPrompt />
+        <Outlet />
+    </>
+);
 
 const NotFound = () => (
     <>
