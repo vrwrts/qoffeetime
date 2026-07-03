@@ -1,25 +1,26 @@
 # Qoffeetime
 
-Coffee timer Progressive Web App, built using [Next.js](https://nextjs.org), with recipes from James Hoffmann.
+Coffee timer Progressive Web App, built with [Vite](https://vite.dev),
+[React](https://react.dev) and [TanStack Router](https://tanstack.com/router),
+with recipes from James Hoffmann. Hosted on Cloudflare Workers.
 
 ## Running locally
 
+Requires [pnpm](https://pnpm.io) (and Node 18+).
+
 ```bash
-$ git clone https://github.com/nielsrowinbik/qoffeetime
+$ git clone https://github.com/vrwrts/qoffeetime
 $ cd qoffeetime
+$ pnpm install   # Install dependencies
+$ pnpm dev       # Start the dev server
 ```
 
-### With Docker:
+## Useful scripts
 
 ```bash
-$ docker compose run --rm qoffeetime npm ci # Only on first run to install dependencies
-$ docker compose up # To start development server
-$ docker compose exec qoffeetime sh # Run this to run commands within the container
-```
-
-### Without Docker:
-
-```bash
-$ npm i # To install dependencies
-$ npm run dev # To start development server
+$ pnpm build     # Type-check and build to ./dist
+$ pnpm preview   # Serve the built app with Wrangler (as Cloudflare will)
+$ pnpm lint      # Lint & format check with Biome
+$ pnpm format    # Apply Biome formatting/lint fixes
+$ pnpm deploy    # Build and deploy to Cloudflare Workers
 ```
