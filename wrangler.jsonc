@@ -1,0 +1,11 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "qoffeetime",
+    "compatibility_date": "2026-07-03",
+    // Static-asset-only Worker: no server script needed. Unmatched paths fall
+    // back to index.html so client-side routes resolve on hard-refresh/deep-link.
+    "assets": {
+        "directory": "./dist",
+        "not_found_handling": "single-page-application"
+    }
+}

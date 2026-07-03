@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root,
+.app {
+    @apply grid grid-cols-1 h-full;
+    grid-template-rows: 64px 1fr minmax(64px, max-content);
+    grid-template-areas: "nav" "main" "footer";
+}

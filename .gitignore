@@ -1,13 +1,14 @@
 *.log
 .DS_Store
-.next
 node_modules
+
+# Env files
 .env*
 !.env.example
-public/sitemap.xml
-public/feed.xml
-public/sw*
-public/workbox*
-public/*dev*
-.vercel
-data/recipies/test.json
+
+# Build output
+dist
+dev-dist
+
+# Cloudflare Wrangler
+.wrangler
