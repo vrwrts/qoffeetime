@@ -35,7 +35,7 @@
     "dependencies": {
         "@mdi/js": "^7.2.96",
         "@mdi/react": "^1.6.1",
-        "@tanstack/react-router": "^1.170.18",
+        "@tanstack/react-router": "^1.170.32",
         "canvas-confetti": "^1.9.4",
         "clsx": "^2.1.1",
         "embla-carousel-react": "^8.6.0",
